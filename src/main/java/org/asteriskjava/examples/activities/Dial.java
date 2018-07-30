@@ -1,18 +1,14 @@
 package org.asteriskjava.examples.activities;
 
-import org.asteriskjava.pbx.ActivityCallback;
-import org.asteriskjava.pbx.ActivityStatusEnum;
-import org.asteriskjava.pbx.Call;
-import org.asteriskjava.pbx.CallerID;
-import org.asteriskjava.pbx.EndPoint;
-import org.asteriskjava.pbx.PBX;
-import org.asteriskjava.pbx.PBXException;
-import org.asteriskjava.pbx.PBXFactory;
-import org.asteriskjava.pbx.TechType;
-import org.asteriskjava.pbx.Trunk;
+import org.asteriskjava.manager.AuthenticationFailedException;
+import org.asteriskjava.manager.TimeoutException;
+import org.asteriskjava.pbx.*;
 import org.asteriskjava.pbx.activities.DialActivity;
+import org.asteriskjava.pbx.internal.core.AsteriskPBX;
 import org.asteriskjava.util.Log;
 import org.asteriskjava.util.LogFactory;
+
+import java.io.IOException;
 
 public class Dial
 {
@@ -20,6 +16,28 @@ public class Dial
 
     static public void main(String[] args)
     {
+		/**
+		 * Initialise the PBX Factory. You need to implement your own AsteriskSettings class.
+		 */
+		PBXFactory.init(new ExamplesAsteriskSettings());
+
+		/**
+		 * Activities utilise an agi entry point in your dial plan.
+		 * You can create your own entry point in dialplan or have
+		 * asterisk-java add it automatically as we do here.
+		 */
+		AsteriskPBX asteriskPbx = (AsteriskPBX) PBXFactory.getActivePBX();
+		try {
+			asteriskPbx.createAgiEntryPoint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (AuthenticationFailedException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
+
+
         syncDial();
         asyncDial();
 
@@ -41,17 +59,18 @@ public class Dial
             // in your /etc/asterisk/sip.d file (assuming you are using a SIP
             // trunk).
             // The trunk is used to select which SIP trunk to dial through.
-            Trunk trunk = pbx.buildTrunk("default");
+            Trunk trunk = pbx.buildTrunk("mathias");
+            // [Joseph Santos] "default"
 
             // We are going to dial from extension 100
-            EndPoint from = pbx.buildEndPoint(TechType.SIP, "100");
+            EndPoint from = pbx.buildEndPoint(TechType.SIP, "james");
             // The caller ID to show on extension 100.
-            CallerID fromCallerID = pbx.buildCallerID("100", "My Phone");
+            CallerID fromCallerID = pbx.buildCallerID("200", "james");
 
             // The caller ID to display on the called parties phone
-            CallerID toCallerID = pbx.buildCallerID("83208100", "Asterisk Java is calling");
+            CallerID toCallerID = pbx.buildCallerID("100", "Asterisk Java is calling");
             // The party we are going to call.
-            EndPoint to = pbx.buildEndPoint(TechType.SIP, trunk, "5551234");
+            EndPoint to = pbx.buildEndPoint(TechType.SIP, trunk, "200");
 
             // Trunk is currently ignored so set to null
             // The call is dialed and only returns when the call comes up (it
@@ -59,6 +78,7 @@ public class Dial
             DialActivity dial = pbx.dial(from, fromCallerID, to, toCallerID);
 
             Call call = dial.getNewCall();
+
 
             Thread.sleep(20000);
 
@@ -78,12 +98,13 @@ public class Dial
         // We are going to dial from extension 100
         EndPoint from = pbx.buildEndPoint(TechType.SIP, "100");
         // The caller ID to show on extension 100.
-        CallerID fromCallerID = pbx.buildCallerID("100", "My Phone");
-
+        //CallerID fromCallerID = pbx.buildCallerID("100", "My Phone");
+		CallerID fromCallerID = pbx.buildCallerID("100", "james");
         // The caller ID to display on the called parties phone
-        CallerID toCallerID = pbx.buildCallerID("83208100", "Asterisk Java is calling");
+        CallerID toCallerID = pbx.buildCallerID("100", "Asterisk Java is calling");
         // The party we are going to call.
-        EndPoint to = pbx.buildEndPoint(TechType.SIP, pbx.buildTrunk("default"), "5551234");
+        //EndPoint to = pbx.buildEndPoint(TechType.SIP, pbx.buildTrunk("default"), "5551234");
+		EndPoint to = pbx.buildEndPoint(TechType.SIP, pbx.buildTrunk("mathias"), "100");
 
         // Start the dial and return immediately.
         // progress is provided via the ActivityCallback.

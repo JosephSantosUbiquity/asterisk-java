@@ -3,16 +3,16 @@ package org.asteriskjava.pbx;
 /**
  * A convenience class that provides a set of defaults that will work
  * for most people.
- * 
+ *
  * You can over-ride any specific methods for settings  that you need to change.
- * 
+ *
  * Key thing to watch out for is that we user a meetme range of 3000-3200.
  * If you are already using this range for other meetme rooms then you need
  * to over-ride the getMeetMeBaseAddress.
- * 
- * If you are using handsets other than yealink or snom you should also over-ride 
+ *
+ * If you are using handsets other than yealink or snom you should also over-ride
  * the getAutoAnswer settings.
- * 
+ *
  * @author bsutton
  *
  */
@@ -22,7 +22,8 @@ public abstract class DefaultAsteriskSettings implements AsteriskSettings
 	@Override
 	public int getManagerPortNo()
 	{
-		return 5060;
+		//return 5060;
+		return 5038;
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public abstract class DefaultAsteriskSettings implements AsteriskSettings
 	/*
 	 * If you are using handsets other than yealink or snom you should over-ride
 	 * these method to return the correct auto-answer string for you handset type.
-	 * 
+	 *
 	 * If you neve use the auto answer feature in the dial command you can
 	 * ignore this setting.
 	 */

@@ -225,7 +225,7 @@ public class DefaultAgiServer extends AbstractAgiServer implements AgiServer
 
     /**
      * Returns the address this server is configured to bind to.
-     * 
+     *
      * @return the address this server is configured to bind to.
      */
     public InetAddress getAddress()
@@ -235,7 +235,7 @@ public class DefaultAgiServer extends AbstractAgiServer implements AgiServer
 
     /**
      * Sets the address to bind server.
-     * 
+     *
      * @param address the address to bind to.
      */
     public void setAddress(InetAddress address)

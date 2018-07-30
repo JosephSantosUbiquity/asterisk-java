@@ -164,7 +164,7 @@ public class MeetmeRoomControl extends EventListenerBaseClass implements Coheren
     /**
      * Returns the MeetmeRoom for the given room number. The room number will be
      * an integer value offset from the meetme base address.
-     * 
+     *
      * @param roomNumber the meetme room number
      * @return
      */

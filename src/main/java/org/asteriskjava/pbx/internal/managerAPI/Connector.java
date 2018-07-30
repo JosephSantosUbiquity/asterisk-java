@@ -24,7 +24,7 @@ public class Connector
     /**
      * Establishes a Asterisk ManagerConnection as well as performing the
      * 'login' required by Asterisk.
-     * 
+     *
      * @param asteriskSettings
      * @return
      * @throws IOException
@@ -48,7 +48,7 @@ public class Connector
      * they can go to the asterisk panel. Fix the problem and then we can retry
      * with the new connection settings within a couple of seconds rather than
      * waiting a minute for a timeout.
-     * 
+     *
      * @param asteriskSettings
      * @throws UnknownHostException
      * @throws IOException
@@ -61,6 +61,7 @@ public class Connector
 
             InetSocketAddress asteriskHost = new InetSocketAddress(asteriskSettings.getAsteriskIP(),
                     asteriskSettings.getManagerPortNo());
+            System.out.println("Asterisk Host => " + asteriskHost);
             socket.connect(asteriskHost, 2000);
         }
 

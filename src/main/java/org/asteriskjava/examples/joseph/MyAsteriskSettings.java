@@ -1,8 +1,8 @@
-package org.asteriskjava.examples.activities;
+package org.asteriskjava.examples.joseph;
 
 import org.asteriskjava.pbx.DefaultAsteriskSettings;
 
-public class ExamplesAsteriskSettings extends DefaultAsteriskSettings {
+public class MyAsteriskSettings extends DefaultAsteriskSettings {
 
 	@Override
 	public String getManagerPassword() {
